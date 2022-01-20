@@ -30,7 +30,7 @@ mpl.rcParams['legend.edgecolor'] = 'inherit'
 
 #Default values, overridden if you pass in command line arguments
 listfile_default = "listfiles/bounds_trial.txt" 
-outfile_default = "plots/PBHbounds_trial.pdf"
+outfile_default = "plots/PBHbounds_trial_2.pdf"
 
 #Load in the filename with the list of bounds and the output filename
 parser = argparse.ArgumentParser(description='...')
@@ -119,12 +119,10 @@ plt.axhspan(1, 1.5, facecolor='grey', alpha=0.5)
 Mrange=np.logspace(-18,3,100)
 f1M=7.0*10**(-2)/Mrange
 f2M=2.0*10**(-5)/Mrange
-plt.plot(Mrange,f1M,lw=2,color="red",label="test")
-plt.plot(Mrange,f2M,lw=2,color="magenta",label="test")
+plt.plot(Mrange,f1M,lw=2,color="red",label="$\\rho\\sim r^{-3/2}$ model ($\\eta=0.1$)")
+plt.plot(Mrange,f2M,lw=2,color="magenta",label="$\\rho\\sim r^{-7/3}$ model ($\\eta=0.1$)")
 
-ax.text(2*10**(-1),10**(-3), '$\\frac{7\\times 10^{-2}}{M/M_\\odot}$', color='red', fontsize=18)
 
-ax.text(5*10**(-5),10**(-3), '$\\frac{2\\times 10^{-5}}{M/M_\\odot}$', color='magenta', fontsize=18)
 
 plt.ylim(1e-4, 1.5)
 plt.xlim(1e-18, 1e4)
@@ -134,6 +132,9 @@ ax.set_xticklabels([], minor=True)
     
 ax.set_xlabel(r'$M_\mathrm{PBH}$ [$M_\odot$]')
 plt.ylabel(r'$f_\mathrm{PBH} = \Omega_\mathrm{PBH}/\Omega_\mathrm{DM}$')
+
+
+plt.legend(loc=3,frameon=True,framealpha=0.5,fontsize=16,ncol=1,handlelength=1,labelcolor='linecolor',bbox_to_anchor = [0.2, 0])
 
 ax_top = ax.twiny()
 ax_top.xaxis.tick_top()
