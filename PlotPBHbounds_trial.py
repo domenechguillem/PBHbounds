@@ -117,14 +117,14 @@ plt.axhspan(1, 1.5, facecolor='grey', alpha=0.5)
 
 ### ADD HERE
 Mrange=np.logspace(-18,3,100)
-f1M=7.0*10**(-3)/Mrange
-f2M=2.0*10**(-6)/Mrange
+f1M=7.0*10**(-2)/Mrange
+f2M=2.0*10**(-5)/Mrange
 plt.plot(Mrange,f1M,lw=2,color="red")
 plt.plot(Mrange,f2M,lw=2,color="magenta")
 
-ax.text(10**(-2),10**(-3), '$\\frac{7\\times 10^{-3}}{M/M_\\odot}$', color='red', fontsize=18)
+ax.text(2*10**(-1),10**(-3), '$\\frac{7\\times 10^{-2}}{M/M_\\odot}$', color='red', fontsize=18)
 
-ax.text(5*10**(-6),10**(-3), '$\\frac{2\\times 10^{-6}}{M/M_\\odot}$', color='magenta', fontsize=18)
+ax.text(5*10**(-5),10**(-3), '$\\frac{2\\times 10^{-4}}{M/M_\\odot}$', color='magenta', fontsize=18)
 
 plt.ylim(1e-4, 1.5)
 plt.xlim(1e-18, 1e4)
