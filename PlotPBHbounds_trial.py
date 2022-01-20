@@ -124,7 +124,7 @@ plt.plot(Mrange,f2M,lw=2,color="magenta")
 
 ax.text(2*10**(-1),10**(-3), '$\\frac{7\\times 10^{-2}}{M/M_\\odot}$', color='red', fontsize=18)
 
-ax.text(5*10**(-5),10**(-3), '$\\frac{2\\times 10^{-4}}{M/M_\\odot}$', color='magenta', fontsize=18)
+ax.text(5*10**(-5),10**(-3), '$\\frac{2\\times 10^{-5}}{M/M_\\odot}$', color='magenta', fontsize=18)
 
 plt.ylim(1e-4, 1.5)
 plt.xlim(1e-18, 1e4)
