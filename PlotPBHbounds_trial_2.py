@@ -119,7 +119,7 @@ plt.axhspan(1, 1.5, facecolor='grey', alpha=0.5)
 Mrange=np.logspace(-18,3,100)
 f1M=7.0*10**(-2)/Mrange
 f2M=2.0*10**(-5)/Mrange
-plt.plot(Mrange,f1M,lw=2,color="red",label="$\\rho\\sim r^{-3/2}$ model ($\\eta=0.1$)")
+plt.plot(Mrange,f1M,lw=2,color="red",ls="dashed",label="$\\rho\\sim r^{-3/2}$ model ($\\eta=0.1$)")
 plt.plot(Mrange,f2M,lw=2,color="magenta",label="$\\rho\\sim r^{-7/3}$ model ($\\eta=0.1$)")
 
 
@@ -134,7 +134,7 @@ ax.set_xlabel(r'$M_\mathrm{PBH}$ [$M_\odot$]')
 plt.ylabel(r'$f_\mathrm{PBH} = \Omega_\mathrm{PBH}/\Omega_\mathrm{DM}$')
 
 
-plt.legend(loc=3,frameon=True,framealpha=0.5,fontsize=16,ncol=1,handlelength=1,labelcolor='linecolor',bbox_to_anchor = [0.2, 0])
+plt.legend(loc=3,frameon=True,framealpha=0.5,fontsize=16,ncol=1,handlelength=1.2,labelcolor='linecolor',bbox_to_anchor = [0.2, 0])
 
 ax_top = ax.twiny()
 ax_top.xaxis.tick_top()
