@@ -1,0 +1,8 @@
+# Bound, colour, linestyle, x, y, rotation, label
+OGLE-strict	C0	-	1e-3	2e-3	0	OGLE
+SNe	C0	-	3e2	7e-1	0	SNe
+Icarus  C0	-	5e-4	1.02e-1	0	Icarus
+FRB-Leung2022	C0	-	6e-4	0.5	0	FRB(CHIME)
+CMB	C3	-	30	8e-4	-80	CMB
+LIGO	C4	-	1e1	2.5e-3	-41	LVK mergers
+LIGO-subsolar	C4	-	0.2 	1e-2 	-50	Subsolar_mergers

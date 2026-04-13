@@ -32,7 +32,7 @@ mpl.rcParams['legend.edgecolor'] = 'inherit'
 plot_SGWB_range = True
 
 #Default values, overridden if you pass in command line arguments
-listfile_default = "listfiles/bounds_all.txt" 
+listfile_default = "listfiles/bounds_solarmass.txt" 
 outfile_default = "plots/PBH_bounds.png"
 
 #Load in the filename with the list of bounds and the output filename
@@ -83,7 +83,7 @@ def addConstraint(boundID, col='blue',x = 1e-30,y=1e-4,ang=0, linestyle='-', lab
     linewidth = 1.0
     #if (boundID in ["Microlensing", "Evaporation"]):
     #    linewidth=2.0
-    plt.plot(m, f, color=col, lw=linewidth, linestyle=linestyle)
+    plt.plot(m, f, color=col, lw=linewidth, linestyle=linestyle, alpha=0.2)
     
     if (x > 1e-20):
         plt.text(x, y, labeltext.replace("_", " "), rotation=ang, fontsize=12, ha='center', va='center')
@@ -123,13 +123,13 @@ for i in range(len(bounds)):
         addConstraint(bounds[i], col = colors[i], x = xlist[i], y = ylist[i], ang=anglist[i], linestyle=lines[i], labeltext=labellist[i])
 
 
-Msun_min = 1e-18
+Msun_min = 1e-4
 Msun_max = 1e4
 
 #Plotting stuff
 plt.axhspan(1, 1.5, facecolor='grey', alpha=0.5, zorder=10)
     
-plt.ylim(5e-6, 1.5)
+plt.ylim(5e-4, 1.5)
 plt.xlim(Msun_min, Msun_max)
     
 xticks = 10**np.arange(np.floor(np.log10(Msun_min)), np.ceil(np.log10(Msun_max))+1)
