@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 import argparse
+import tools
 
 
 #Specify the plot style
@@ -48,7 +49,8 @@ outfile = args.outfile
 
 DARKMODE = args.dark
 
-alpha_val = 0.15
+#alpha_val = 0.15
+alpha_val = 0.20
 if (DARKMODE):
     plt.style.use('dark_background')
     alpha_val = 0.35
@@ -69,14 +71,17 @@ if (DARKMODE):
 
 
 def addConstraint(boundID, col='blue',x = 1e-30,y=1e-4,ang=0, linestyle='-'):
-    m, f = np.loadtxt('bounds/' + boundID + '.txt', unpack=True)
-    if (boundID != "OGLE?"):
+    m, f = tools.load_bound(boundID)
+    if (boundID != "OGLE-hint"):
         plt.fill_between(m , np.clip(f, 0,1), 1, alpha=alpha_val, color=col)
     linewidth = 1.0
     plt.plot(m, np.clip(f, 0,1), color=col, lw=linewidth, linestyle=linestyle)
     
     if (x > 1e-20):
-        plt.text(x, y, boundID, rotation=ang, fontsize=12, ha='center', va='center', color=col)
+        tbox = dict(facecolor='white', edgecolor='none', boxstyle='round', alpha=0.7)
+        plt.text(x, y, boundID, rotation=ang, fontsize=13, ha='center', va='center', 
+                color=col, zorder=20, weight='bold', bbox=tbox)
+        
 
 def addSIGWprojections(col='red', linestyle='--'):
     plt.fill_between([6.6e-14, 6.6e-12], 5e-3, 1, color=col, alpha = alpha_val, linewidth=0)
@@ -114,6 +119,7 @@ for i in range(len(bounds)):
 
 #Plotting stuff
 plt.axhspan(1, 1.5, facecolor='grey', alpha=0.5)
+plt.axhline(1, color='grey',lw=2)
     
 plt.ylim(1e-4, 1.5)
 plt.xlim(1e-18, 1e4)
@@ -128,7 +134,7 @@ ax_top = ax.twiny()
 ax_top.xaxis.tick_top()
 ax_top.set_xscale('log')
 ax_top.set_xlim(ax.get_xlim())
-ax_top.set_xlabel(r'$M_\mathrm{PBH}$ [g]', labelpad=7)
+ax_top.set_xlabel(r'$M_\mathrm{PBH}$ [g]', labelpad=10)
 
 g_ticks_minor = np.geomspace(1e15, 1e37, 23)
 g_ticks = g_ticks_minor[::3]

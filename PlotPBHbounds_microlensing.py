@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 import argparse
+import tools
 
 
 #Specify the plot style
@@ -32,8 +33,8 @@ mpl.rcParams['legend.edgecolor'] = 'inherit'
 plot_SGWB_range = True
 
 #Default values, overridden if you pass in command line arguments
-listfile_default = "listfiles/bounds_microlensing_withOGLE.txt" 
-outfile_default = "plots/PBHbounds_microlensing_square_withOGLE.pdf"
+listfile_default = "listfiles/bounds_microlensing.txt" 
+outfile_default = "plots/PBHbounds_microlensing_square.pdf"
 
 #Load in the filename with the list of bounds and the output filename
 parser = argparse.ArgumentParser(description='...')
@@ -64,17 +65,24 @@ ylist = np.loadtxt(listfile, usecols=(4,))
 anglist = np.loadtxt(listfile, usecols=(5,))
 labellist = np.loadtxt(listfile, usecols=(6,), dtype=str)
 
+Mgrid = np.geomspace(1e-12, 1e5, 1000)
+envelope = 1e10 + 0.0*Mgrid
+
 def addConstraint(boundID, col='blue',x = 1e-30,y=1e-4,ang=0, linestyle='-', labeltext=''):
-    m, f = np.loadtxt('bounds/' + boundID + '.txt', unpack=True)
+    m, f = tools.load_bound(boundID)
     if (boundID != "OGLE-hint"):
-        plt.fill_between(m , np.clip(f, 0,1), 1, alpha=alpha_val, color=col)
+        plt.fill_between(m , f, 1, alpha=alpha_val, color=col)
     linewidth = 1.0
     if (boundID in ["Microlensing", "Evaporation"]):
         linewidth=2.0
-    plt.plot(m, np.clip(f, 0,1), color=col, lw=linewidth, linestyle=linestyle)
+    plt.plot(m, f, color=col, lw=linewidth, linestyle=linestyle)
     
     if (x > 1e-20):
         plt.text(x, y, labeltext.replace("_", " "), rotation=ang, fontsize=12, ha='center', va='center')
+        
+    interped_lim = 10**np.interp(np.log10(Mgrid), np.log10(m), np.log10(f), left=10, right=10)
+    envelope[interped_lim < envelope] = interped_lim[interped_lim < envelope]
+    
 
 def addSIGWprojections(col='red', linestyle='--'):
     plt.fill_between([6.6e-14, 6.6e-12], 5e-3, 1, color=col, alpha = alpha_val, linewidth=0)
@@ -93,6 +101,7 @@ def addSIGWprojections(col='red', linestyle='--'):
     plt.text(1e-14, 4e-3, "SIGWs", fontsize=12, ha='center', va='center')
 
 #-------------------------------------------    
+    
     
 plt.figure(figsize=(5,5))
 
@@ -113,7 +122,7 @@ for i in range(len(bounds)):
 #Plotting stuff
 plt.axhspan(1, 1.5, facecolor='grey', alpha=0.5)
     
-plt.ylim(1e-3, 1.5)
+plt.ylim(5e-4, 1.5)
 
 xmin = 1e-12
 xmax = 1e4
@@ -152,7 +161,17 @@ ax_top.set_xticklabels([],minor=True)
 
 ax.text(0.5, 0.05, "Micro-lensing", va = "bottom", ha = "center", color='C0',  transform=ax.transAxes)
 
+#Plot the envelope
+plt.plot(Mgrid, envelope, linestyle='--', color='k')
+
 plt.savefig(outfile, bbox_inches='tight')
+    
+    
+#Save envelope to file
+#envelope[envelope > 1e20] += np.nan
+headertxt = "Envelope of microlensing bounds: " + ", ".join(bounds)
+headertxt += "\n Columns: PBH mass [Muns], PBH fraction f_PBH"
+np.savetxt("bounds/Microlensing.txt", np.c_[Mgrid, envelope], header=headertxt)
     
 plt.show()
 
